@@ -1,3 +1,6 @@
+from collections import defaultdict
+import json
+
 from .with_id import WithId
 
 class Log(object):
@@ -22,3 +25,19 @@ class Print(Log):
 
     def error(self, id, data):
         print("<! {}".format(data))
+
+class Store(Log):
+    def __init__(self):
+        self.logs = defaultdict(dict)
+
+    def input(self, id, data):
+        self.logs[id]["input"] = data
+
+    def output(self, id, data):
+        self.logs[id]["output"] = data
+
+    def error(self, id, data):
+        self.logs[id]["error"] = data
+
+    def dumps(self):
+        return json.dumps(self.logs, indent=4)

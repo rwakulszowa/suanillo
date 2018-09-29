@@ -1,5 +1,5 @@
 from . import id
-from .log import Print
+from .log import Print, Store
 
 def base(log):
     def trace(fun):
@@ -17,3 +17,7 @@ def base(log):
     return trace
 
 simple = base(Print())
+
+# Global store, at least for now
+store = Store()
+store_trace = base(store)
