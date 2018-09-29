@@ -1,15 +1,17 @@
+from . import id
 from .log import Print
 
 def base(log):
     def trace(fun):
         def inner(*args, **kwargs):
-            log.input((args, kwargs))
+            log_ = log.with_id(id.make())
+            log_.input((args, kwargs))
             try:
                 ans = fun(*args, **kwargs)
-                log.output(ans)
+                log_.output(ans)
                 return ans
             except Exception as e:
-                log.error(e)
+                log_.error(e)
                 raise e
         return inner
     return trace
